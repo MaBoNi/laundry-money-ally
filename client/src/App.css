@@ -54,3 +54,50 @@
     flex-direction: column;
   }
 }
+
+.pincode-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 80%;
+  max-width: 300px;
+}
+
+.pincode-popup input {
+  width: 80%;
+  padding: 10px;
+  margin-top: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.pincode-popup button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  margin-top: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.pincode-popup .error {
+  color: red;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.pincode-popup button:hover {
+  transform: translateY(-2px);
+}
+
+.pincode-popup button:active {
+  transform: translateY(2px);
+}
