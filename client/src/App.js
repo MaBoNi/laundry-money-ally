@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-route
 import './App.css';
 import Overview from './Overview';
 
-function App() {
+function MainComponent() {
   const [showPincodePopup, setShowPincodePopup] = useState(false);
   const [currentUsername, setCurrentUsername] = useState('');
   const [pincode, setPincode] = useState('');
@@ -39,38 +39,40 @@ function App() {
   };
 
   return (
-    <Router>
-      <div className="App">
-        <Routes>
-          <Route path="/" element={
-            <>
-              <div className="button-container">
-                <button className="blue-button" onClick={() => handleButtonClick('NOAH')}>NOAH</button>
-                <button className="blue-button" onClick={() => handleButtonClick('NAJA')}>NAJA</button>
-              </div>
-              <div className="button-container">
-                <button className="blue-button large-button" onClick={() => handleButtonClick('FAR')}>DAD</button>
-              </div>
-
-              {showPincodePopup && (
-                <div className="pincode-popup">
-                  <h2>Enter Pincode for {currentUsername}</h2>
-                  <input
-                    type="password"
-                    value={pincode}
-                    onChange={(e) => setPincode(e.target.value)}
-                    placeholder="Enter pincode"
-                  />
-                  <button onClick={handlePincodeSubmit}>Submit</button>
-                  {error && <p className="error">{error}</p>}
-                  <button onClick={() => setShowPincodePopup(false)}>Cancel</button>
-                </div>
-              )}
-            </>
-          } />
-          <Route path="/overview/:username" element={<Overview />} />
-        </Routes>
+    <div className="App">
+      <div className="button-container">
+        <button className="blue-button" onClick={() => handleButtonClick('NOAH')}>NOAH</button>
+        <button className="blue-button" onClick={() => handleButtonClick('NAJA')}>NAJA</button>
       </div>
+      <div className="button-container">
+        <button className="blue-button large-button" onClick={() => handleButtonClick('FAR')}>FAR</button>
+      </div>
+
+      {showPincodePopup && (
+        <div className="pincode-popup">
+          <h2>Enter Pincode for {currentUsername}</h2>
+          <input
+            type="password"
+            value={pincode}
+            onChange={(e) => setPincode(e.target.value)}
+            placeholder="Enter pincode"
+          />
+          <button onClick={handlePincodeSubmit}>Submit</button>
+          {error && <p className="error">{error}</p>}
+          <button onClick={() => setShowPincodePopup(false)}>Cancel</button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<MainComponent />} />
+        <Route path="/overview/:username" element={<Overview />} />
+      </Routes>
     </Router>
   );
 }
