@@ -1,22 +1,24 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS  # Import CORS
 from config import SessionLocal, engine
 from models import Base, Task, User
 from sqlalchemy.orm import sessionmaker
 
 app = Flask(__name__)
+CORS(app)  # Enable CORS for all routes
 
 # Create the database tables if they don't exist
 Base.metadata.create_all(bind=engine)
 
-# Seed initial users for testing
+# Seed initial users
 Session = sessionmaker(bind=engine)
 session = Session()
 
-#  Check if users already exist to avoid duplicates
+# Check if users already exist to avoid duplicates
 if session.query(User).count() == 0:
     noah = User(username="NOAH", role="Child", pincode="8925")
     naja = User(username="NAJA", role="Child", pincode="2409")
-    far = User(username="FAR", role="Parent", pincode="0000")
+    far = User(username="FAR", role="Parent", pincode="2112")
     
     session.add_all([noah, naja, far])
     session.commit()
