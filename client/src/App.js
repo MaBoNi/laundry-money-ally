@@ -1,15 +1,20 @@
 import React, { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import './App.css';
+import Overview from './Overview';
 
 function App() {
   const [showPincodePopup, setShowPincodePopup] = useState(false);
   const [currentUsername, setCurrentUsername] = useState('');
   const [pincode, setPincode] = useState('');
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleButtonClick = (username) => {
     setCurrentUsername(username);
     setShowPincodePopup(true);
+    setPincode(''); // Reset pincode input
+    setError('');   // Reset error message
   };
 
   const handlePincodeSubmit = async () => {
@@ -22,8 +27,8 @@ function App() {
       const result = await response.json();
 
       if (response.ok) {
-        // Redirect to the next page (to be implemented)
-        console.log('Pincode valid. Redirecting...');
+        // Navigate to the Overview page if pincode is correct
+        navigate(`/overview/${currentUsername}`);
         setShowPincodePopup(false);
       } else {
         setError(result.message);
@@ -34,30 +39,39 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <div className="button-container">
-        <button className="blue-button" onClick={() => handleButtonClick('NOAH')}>NOAH</button>
-        <button className="blue-button" onClick={() => handleButtonClick('NAJA')}>NAJA</button>
-      </div>
-      <div className="button-container">
-        <button className="blue-button large-button" onClick={() => handleButtonClick('FAR')}>FAR</button>
-      </div>
+    <Router>
+      <div className="App">
+        <Routes>
+          <Route path="/" element={
+            <>
+              <div className="button-container">
+                <button className="blue-button" onClick={() => handleButtonClick('NOAH')}>NOAH</button>
+                <button className="blue-button" onClick={() => handleButtonClick('NAJA')}>NAJA</button>
+              </div>
+              <div className="button-container">
+                <button className="blue-button large-button" onClick={() => handleButtonClick('FAR')}>DAD</button>
+              </div>
 
-      {showPincodePopup && (
-        <div className="pincode-popup">
-          <h2>Enter Pincode for {currentUsername}</h2>
-          <input
-            type="password"
-            value={pincode}
-            onChange={(e) => setPincode(e.target.value)}
-            placeholder="Enter pincode"
-          />
-          <button onClick={handlePincodeSubmit}>Submit</button>
-          {error && <p className="error">{error}</p>}
-          <button onClick={() => setShowPincodePopup(false)}>Cancel</button>
-        </div>
-      )}
-    </div>
+              {showPincodePopup && (
+                <div className="pincode-popup">
+                  <h2>Enter Pincode for {currentUsername}</h2>
+                  <input
+                    type="password"
+                    value={pincode}
+                    onChange={(e) => setPincode(e.target.value)}
+                    placeholder="Enter pincode"
+                  />
+                  <button onClick={handlePincodeSubmit}>Submit</button>
+                  {error && <p className="error">{error}</p>}
+                  <button onClick={() => setShowPincodePopup(false)}>Cancel</button>
+                </div>
+              )}
+            </>
+          } />
+          <Route path="/overview/:username" element={<Overview />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
