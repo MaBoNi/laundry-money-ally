@@ -1,0 +1,14 @@
+.App {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.hello-world-box {
+  background-color: #007bff;
+  color: white;
+  font-size: 2em;
+  padding: 40px;
+  border-radius: 15px;
+}
