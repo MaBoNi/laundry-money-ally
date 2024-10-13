@@ -18,7 +18,7 @@ session = Session()
 if session.query(User).count() == 0:
     noah = User(username="NOAH", role="Child", pincode="8925")
     naja = User(username="NAJA", role="Child", pincode="2409")
-    far = User(username="FAR", role="Parent", pincode="2112")
+    far = User(username="FAR", role="Parent", pincode="0000")
     
     session.add_all([noah, naja, far])
     session.commit()
