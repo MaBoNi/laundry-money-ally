@@ -1,0 +1,18 @@
+services:
+  client:
+    build: ./client
+    ports:
+      - "5432:3000"
+    environment:
+      - REACT_APP_API_BASE_URL=http://localhost:4321
+    volumes:
+      - ./client:/app
+
+  server:
+    build: ./server
+    ports:
+      - "4321:5000"
+    environment:
+      - DATABASE_URL=sqlite:///app.db
+    volumes:
+      - ./server:/app
