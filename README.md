@@ -49,3 +49,33 @@ Log in to the app to add tasks, mark them as complete, and automatically calcula
   "date": "2024-10-13",
   "amount": 5
 }
+
+## Demo
+Access a live demo of this service at [https://demo-lma.bondit.dk](https://demo-lma.bondit.dk)
+
+## Technologies Used
+- **React** – Frontend framework for an interactive UI.
+- **Python** – Backend language for API development.
+- **SQLAlchemy** – ORM for managing and interacting with the database.
+- **Docker** – Ensures a consistent and reproducible deployment environment.
+
+## Docker Hub Repository
+You can pull the Docker image directly from Docker Hub:
+[![Docker Hub](https://img.shields.io/badge/Docker%20Hub-external--ip--checker-blue?logo=docker&style=for-the-badge)](https://hub.docker.com/r/maboni82/laundry-money-ally)
+
+## License
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+- Built to encourage kids to learn about responsibility and earning their allowance.
+- Created with love for easy deployment and family-friendly use.
+
+## Contributing
+Contributions are welcome! Feel free to open an issue or submit a pull request.
+
+## Repobeats Analytics
+---
+
+![Alt](https://repobeats.axiom.co/api/embed/3ec5342430d0e6a88653e4756fb02c6692b1d50b.svg "Repobeats analytics image")
+
+---
