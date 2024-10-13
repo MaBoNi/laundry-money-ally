@@ -58,6 +58,7 @@ Access a live demo of this service at [https://demo-lma.bondit.dk](https://demo-
 - **React** – Frontend framework for an interactive UI.
 - **Python** – Backend language for API development.
 - **SQLAlchemy** – ORM for managing and interacting with the database.
+- **alembic** - A lightweight database migration tool for usage with SQLAlchemy. 
 - **Docker** – Ensures a consistent and reproducible deployment environment.
 
 ## Docker Hub Repository
