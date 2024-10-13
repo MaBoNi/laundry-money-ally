@@ -49,6 +49,7 @@ Log in to the app to add tasks, mark them as complete, and automatically calcula
   "date": "2024-10-13",
   "amount": 5
 }
+```
 
 ## Demo
 Access a live demo of this service at [https://demo-lma.bondit.dk](https://demo-lma.bondit.dk)
@@ -61,7 +62,7 @@ Access a live demo of this service at [https://demo-lma.bondit.dk](https://demo-
 
 ## Docker Hub Repository
 You can pull the Docker image directly from Docker Hub:
-[![Docker Hub](https://img.shields.io/badge/Docker%20Hub-external--ip--checker-blue?logo=docker&style=for-the-badge)](https://hub.docker.com/r/maboni82/laundry-money-ally)
+[![Docker Hub](https://img.shields.io/badge/Docker%20Hub-laundry-money-ally-blue?logo=docker&style=for-the-badge)](https://hub.docker.com/r/maboni82/laundry-money-ally)
 
 ## License
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
