@@ -151,4 +151,4 @@ dmypy.json
 cython_debug/
 
 
-server/app.db
+/server/app.db
