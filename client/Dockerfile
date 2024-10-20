@@ -15,6 +15,13 @@ COPY . .
 # Build the app for production
 RUN npm run build
 
+# Update packages and install SQLite for database inspection and troubleshooting
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get autoremove -y && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
 # Step 2: Serve the app with Nginx
 # Use the official Nginx image for serving the app
 FROM nginx:alpine

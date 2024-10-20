@@ -8,6 +8,16 @@ services:
       - REACT_APP_API_BASE_URL=http://192.168.1.188:4321
     volumes:
       - ./client:/app
+    develop:
+      watch:
+        - action: sync
+          path: ./client
+          target: /app
+          ignore:
+            - node_modules
+            - public
+        - action: rebuild
+          path: ./client
 
   server:
     build: ./server

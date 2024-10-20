@@ -12,10 +12,11 @@ function Overview() {
   const [newChildName, setNewChildName] = useState('');
   const [newChildPincode, setNewChildPincode] = useState('');
   const [message, setMessage] = useState('');
+  const APIbaseUrl = process.env.REACT_APP_API_BASE_URL;
 
   useEffect(() => {
     console.log("Fetching list of children for Overview...");
-    fetch('http://localhost:4321/users/children')
+    fetch(`${APIbaseUrl}/users/children`)
       .then(response => response.json())
       .then(data => {
         console.log("Children data fetched:", data);
@@ -23,8 +24,8 @@ function Overview() {
       })
       .catch(error => console.error("Error fetching children:", error));
 
-    // Check if the current user is a parent
-    if (username === "FAR") {  // Assuming "FAR" is the parent role
+    // Check if the current user is a parent - TODO update this logic to use the roles instead
+    if (username === "FAR") { // This is a hardcoded value for testing
       console.log("Current user is a parent.");
       setIsParent(true);
     } else {
@@ -35,7 +36,7 @@ function Overview() {
   const handleAddChild = async () => {
     console.log("Attempting to add a new child:", newChildName);
     try {
-      const response = await fetch('http://localhost:4321/users/children', {
+      const response = await fetch(`${APIbaseUrl}/users/children`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username: newChildName, pincode: newChildPincode })

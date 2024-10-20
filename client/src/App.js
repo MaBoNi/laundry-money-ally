@@ -1,41 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import './App.css';
 import Overview from './Overview';
-
-console.log("App.js loaded");
 
 function MainComponent() {
   const [showPincodePopup, setShowPincodePopup] = useState(false);
   const [currentUsername, setCurrentUsername] = useState('');
   const [pincode, setPincode] = useState('');
   const [error, setError] = useState('');
-  const [children, setChildren] = useState([]);
-  const [parents, setParents] = useState([]);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    console.log("Fetching children...");
-    fetch('http://localhost:4321/users/children')
-      .then(response => response.json())
-      .then(data => {
-        console.log("Children fetched:", data);
-        setChildren(data);
-      })
-      .catch(error => console.error("Error fetching children:", error));
-
-    console.log("Fetching parents...");
-    fetch('http://localhost:4321/users/parents')
-      .then(response => response.json())
-      .then(data => {
-        console.log("Parents fetched:", data);
-        setParents(data);
-      })
-      .catch(error => console.error("Error fetching parents:", error));
-  }, []);
-
   const handleButtonClick = (username) => {
-    console.log("Button clicked:", username);
     setCurrentUsername(username);
     setShowPincodePopup(true);
     setPincode(''); // Reset pincode input
@@ -43,7 +18,6 @@ function MainComponent() {
   };
 
   const handlePincodeSubmit = async () => {
-    console.log("Submitting pincode for:", currentUsername);
     try {
       const response = await fetch('http://localhost:4321/validate_pincode', {
         method: 'POST',
@@ -53,15 +27,13 @@ function MainComponent() {
       const result = await response.json();
 
       if (response.ok) {
-        console.log("Pincode valid. Navigating to Overview page...");
+        // Navigate to the Overview page if pincode is correct
         navigate(`/overview/${currentUsername}`);
         setShowPincodePopup(false);
       } else {
-        console.error("Invalid pincode:", result.message);
         setError(result.message);
       }
     } catch (error) {
-      console.error("Error during pincode validation:", error);
       setError('An error occurred. Please try again.');
     }
   };
@@ -69,18 +41,11 @@ function MainComponent() {
   return (
     <div className="App">
       <div className="button-container">
-        {children.map(child => (
-          <button key={child.id} className="blue-button" onClick={() => handleButtonClick(child.username)}>
-            {child.username}
-          </button>
-        ))}
+        <button className="blue-button" onClick={() => handleButtonClick('NOAH')}>NOAH</button>
+        <button className="blue-button" onClick={() => handleButtonClick('NAJA')}>NAJA</button>
       </div>
-      <div className="button-container-large">
-        {parents.map(parent => (
-          <button key={parent.id} className="blue-button large-button" onClick={() => handleButtonClick(parent.username)}>
-            {parent.username}
-          </button>
-        ))}
+      <div className="button-container">
+        <button className="blue-button large-button" onClick={() => handleButtonClick('FAR')}>FAR</button>
       </div>
 
       {showPincodePopup && (
@@ -102,7 +67,6 @@ function MainComponent() {
 }
 
 function App() {
-  console.log("App component rendering");
   return (
     <Router>
       <Routes>

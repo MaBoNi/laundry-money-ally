@@ -17,6 +17,10 @@ Base.metadata.create_all(bind=engine)
 Session = sessionmaker(bind=engine)
 session = Session()
 
+# Truncate the users table
+session.query(User).delete()
+session.commit()
+
 # Check if users already exist to avoid duplicates
 if session.query(User).count() == 0:
     noah = User(username="NOAH", role="Child", pincode="8925")
@@ -38,6 +42,27 @@ def get_tasks():
     session.close()
     return jsonify([{"id": task.id, "name": task.name, "reward": task.reward} for task in tasks])
 
+@app.route('/users', methods=['GET'])
+def get_users():
+    session = SessionLocal()
+    secure = request.args.get('secure', False)
+    users = session.query(User).all()
+    session.close()
+    if not users:
+        return jsonify(["No users found"])
+    if secure:
+        return jsonify([{"id": user.id, "username": user.username, "role": user.role, "pincode": user.pincode} for user in users])
+    else:
+        return jsonify([{"id": users.id, "username": users.username, "role": users.role} for child in users])
+
+@app.route('/users/<int:user_id>', methods=['GET'])
+def get_user_by_id(user_id):
+    session = SessionLocal()
+    user = session.query(User).filter_by(id=user_id).first()
+    session.close()
+    if not user:
+        return jsonify({"status": "failure", "message": "User not found"}), 404
+    return jsonify({"id": user.id, "username": user.username, "role": user.role})
 
 @app.route('/users/children', methods=['GET'])
 def get_children():
@@ -45,13 +70,6 @@ def get_children():
     children = session.query(User).filter(User.role == "Child").all()
     session.close()
     return jsonify([{"id": child.id, "username": child.username} for child in children])
-
-@app.route('/users/parents', methods=['GET'])
-def get_parents():
-    session = SessionLocal()
-    parents = session.query(User).filter(User.role == "Parent").all()
-    session.close()
-    return jsonify([{"id": parent.id, "username": parent.username} for parent in parents])
 
 @app.route('/users/children', methods=['POST'])
 def add_child():
@@ -70,6 +88,13 @@ def add_child():
     session.commit()
     session.close()
     return jsonify({"status": "success", "message": "Child added successfully"}), 201
+
+@app.route('/users/parents', methods=['GET'])
+def get_parents():
+    session = SessionLocal()
+    parents = session.query(User).filter(User.role == "Parent").all()
+    session.close()
+    return jsonify([{"id": parent.id, "username": parent.username} for parent in parents])
 
 @app.route('/users/parents', methods=['POST'])
 def add_parent():
